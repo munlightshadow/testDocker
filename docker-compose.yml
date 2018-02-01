@@ -1,0 +1,33 @@
+version: '2'
+networks:
+  kafka1:
+    driver: bridge
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    networks:
+      - kafka1
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+    networks:
+      - kafka1
+    links:
+      - zookeeper
+    #environment:
+    #  KAFKA_CREATE_TOPICS: "t1:1:1,t2:1:1,t3:1:1,t4:1:1,t5:1:1,t6:1:1,t7:1:1,t8:1:1,t9:1:1,t10:1:1,t11:1:1,t12:1:1,t13:1:1,t14:1:1,t15:1:1"  
+    command: /bin/bash -c "/broker_helpers/configure_and_start_broker.sh"    
+    volumes:
+      - ./broker_helpers:/broker_helpers
+  catprod:
+    build:
+      context: ./catprod
+      dockerfile: Dockerfile
+    volumes:
+      - /var/www/docker/catprod/src:/app
+    networks:
+      - kafka1
+    command:
+      - "./npmi.sh"
