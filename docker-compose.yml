@@ -26,8 +26,17 @@ services:
       context: ./catprod
       dockerfile: Dockerfile
     volumes:
-      - /var/www/docker/catprod/src:/app
+      - /var/www/bedrock/catprod/src:/app
     networks:
       - kafka1
     command:
       - "./npmi.sh"
+  consul:
+    image: consul
+    volumes:
+      - /var/www/bedrock/consul:/app      
+    networks:
+      - kafka1
+    environment:
+      - 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}'
+      - CONSUL_BIND_INTERFACE=eth0
