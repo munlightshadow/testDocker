@@ -49,14 +49,3 @@ services:
       - /var/www/bedrock/logstash:/app
     networks:
       - kafka1
-  # ubuntu:
-  #   build:    
-  #     context: ./ubuntu
-  #     dockerfile: Dockerfile
-  #   # image: docker.elastic.co/logstash/logstash:6.2.0
-  #   volumes:
-  #     - /var/www/bedrock/ubuntu:/app
-  #   networks:
-  #     - kafka1
-    # command:
-      # - ls
