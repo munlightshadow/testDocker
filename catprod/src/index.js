@@ -1,3 +1,21 @@
+// --- Logstash ---
+var Logstash = require('logstash-client');
+ 
+var logstash = new Logstash({
+  type: 'udp', // udp, tcp, memory 
+  host: 'logstash',
+  port: 9563
+});
+
+var console = {};
+console.log = function(arg){
+  logstash.send(arg);
+};
+
+console.log('Test...');
+
+
+
 // --- Consul ---
 
 var consul = require('consul')({
@@ -7,24 +25,6 @@ var consul = require('consul')({
 consul.kv.set('redis/test', 'HI', function(err, result) {
   if (err) throw err;  
 });
-
-
-// --- Logstash ---
-
-var Logstash = require('logstash-client');
-console.log('Starting logstash...');
- 
-var logstash = new Logstash({
-  type: 'udp', // udp, tcp, memory 
-  host: 'logstash',
-  port: 9563
-});
-console.log('Write...');
-logstash.send('message', () => {
-  console.log('++++++++ write correct!!! ++++++++');
-});
-console.log('End logstash...');
-
 
 
 // --- Producer ---
