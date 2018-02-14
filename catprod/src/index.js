@@ -1,5 +1,5 @@
 // --- Consul ---
-/*
+
 var consul = require('consul')({
   host: 'consul'
 });
@@ -7,7 +7,7 @@ var consul = require('consul')({
 consul.kv.set('redis/test', 'HI', function(err, result) {
   if (err) throw err;  
 });
-*/
+
 
 // --- Logstash ---
 
@@ -26,7 +26,7 @@ logstash.send('message', () => {
 console.log('End logstash...');
 
 
-/*
+
 // --- Producer ---
 const ENABLE_SEND_DATA_BY_PRODUCER = false;
 
@@ -92,6 +92,3 @@ producer.on('event.error', (err) => {
 
 
 // --- Consumer ---
-
-
-*/
