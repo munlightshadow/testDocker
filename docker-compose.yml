@@ -40,3 +40,23 @@ services:
     environment:
       - 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}'
       - CONSUL_BIND_INTERFACE=eth0
+  logstash:
+    privileged: true
+    build:    
+      context: ./logstash
+      dockerfile: Dockerfile
+    volumes:
+      - /var/www/bedrock/logstash:/app
+    networks:
+      - kafka1
+  # ubuntu:
+  #   build:    
+  #     context: ./ubuntu
+  #     dockerfile: Dockerfile
+  #   # image: docker.elastic.co/logstash/logstash:6.2.0
+  #   volumes:
+  #     - /var/www/bedrock/ubuntu:/app
+  #   networks:
+  #     - kafka1
+    # command:
+      # - ls

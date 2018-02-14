@@ -4,7 +4,8 @@
 	"dependencies": {
 		"node-rdkafka": "*",
 		"consul": "*",
-		"http": "*"
+		"http": "*",
+		"logstash-client": "*"
 	},
 	"main": "index.js",
 	"devDependencies": {},

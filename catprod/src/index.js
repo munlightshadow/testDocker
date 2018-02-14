@@ -1,4 +1,5 @@
 // --- Consul ---
+/*
 var consul = require('consul')({
   host: 'consul'
 });
@@ -6,9 +7,28 @@ var consul = require('consul')({
 consul.kv.set('redis/test', 'HI', function(err, result) {
   if (err) throw err;  
 });
+*/
+
+// --- Logstash ---
+
+var Logstash = require('logstash-client');
+console.log('Starting logstash...');
+ 
+var logstash = new Logstash({
+  type: 'udp', // udp, tcp, memory 
+  host: 'logstash',
+  port: 9563
+});
+console.log('Write...');
+logstash.send('message', () => {
+  console.log('++++++++ write correct!!! ++++++++');
+});
+console.log('End logstash...');
 
 
+/*
 // --- Producer ---
+const ENABLE_SEND_DATA_BY_PRODUCER = false;
 
 var rdkafka = require('node-rdkafka');
 
@@ -40,23 +60,23 @@ consumer
 
     consul.kv.get('redis/test', function(err, result) {
       if (err) throw err;
-
-        try {
-          producer.produce(
-            // Topic to send the message to
-            'topic',
-            // optionally we can manually specify a partition for the message
-            // this defaults to -1 - which will use librdkafka's default partitioner (consistent random for keyed messages, random for unkeyed messages)
-            null,
-            // Message to send. Must be a buffer
-            new Buffer(result.Value),
-          );
-          console.log('Message has been sent...');
-        } catch (err) {
-          console.error('A problem occurred when sending our message');
-          console.error(err);
+        if (ENABLE_SEND_DATA_BY_PRODUCER) {
+          try {          
+            producer.produce(
+              // Topic to send the message to
+              'topic',
+              // optionally we can manually specify a partition for the message
+              // this defaults to -1 - which will use librdkafka's default partitioner (consistent random for keyed messages, random for unkeyed messages)
+              null,
+              // Message to send. Must be a buffer
+              new Buffer(result.Value),
+            );
+            console.log('Message has been sent...');
+          } catch (err) {
+            console.error('A problem occurred when sending our message');
+            console.error(err);
+          }          
         }
-
       console.log('+++', result.Value);
     });    
   });
@@ -74,3 +94,4 @@ producer.on('event.error', (err) => {
 // --- Consumer ---
 
 
+*/
